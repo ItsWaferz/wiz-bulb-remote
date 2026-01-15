@@ -6,10 +6,11 @@ import ColorPicker from "./ColorPicker";
 import Timer from "./Timer";
 import Interval from "./Interval";
 import Slider from "./Slider";
+import useLocalStorage from "./useLocalStorage";
 import { Pencil, Sun, Heart, Moon, Tv2, Sofa, BookMarked } from "lucide-react";
 
 function App() {
-  const [bulbSettings, setBulb] = useState({
+  const [bulbSettings, setBulb] = useLocalStorage("bulbSettings", {
     isOn: true,
     color: "#ffcc00",
     brightness: 100,
@@ -39,8 +40,8 @@ function App() {
 
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [isTimerEditOpen, setIsTimerEditOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(300);
-  const [lastTime, setLastTime] = useState(300);
+  const [lastTime, setLastTime] = useLocalStorage("lastTime", 300);
+  const [timeLeft, setTimeLeft] = useState(lastTime);
 
   const initialScenes = [
     {
@@ -126,7 +127,7 @@ function App() {
       backgroundColor: "#00ffff",
     },
   ];
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorage("colors", initialColors);
 
   const initialRoutine = [
     {
@@ -165,7 +166,7 @@ function App() {
       brightness: 10,
     },
   ];
-  const [routine, setRoutine] = useState(initialRoutine);
+  const [routine, setRoutine] = useLocalStorage("routine", initialRoutine);
   const [tempRoutine, setTempRoutine] = useState(routine);
   const formatTime = (seconds) => {
     seconds = parseInt(seconds);
